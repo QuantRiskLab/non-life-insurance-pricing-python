@@ -1,0 +1,51 @@
+
+name: Python Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Check Python syntax
+        run: |
+          python -m compileall -q src
+
+      - name: Run claim frequency simulation
+        run: python src/claim_frequency.py
+
+      - name: Run claim severity simulation
+        run: python src/claim_severity.py
+
+      - name: Run premium calculation
+        run: python src/premium_calculation.py
+
+      - name: Run Monte Carlo risk simulation
+        run: python src/monte_carlo_risk.py
+
+      - name: Generate risk visualization
+        run: python src/risk_visualization.py
+
+      - name: Upload risk visualization
+        uses: actions/upload-artifact@v4
+        with:
+          name: risk-visualization
+          path: figures/aggregate_loss_distribution.png
+          if-no-files-found: error
