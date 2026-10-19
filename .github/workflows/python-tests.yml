@@ -43,9 +43,22 @@ jobs:
       - name: Generate risk visualization
         run: python src/risk_visualization.py
 
-      - name: Upload risk visualization
+      - name: Run Poisson frequency GLM
+        run: python src/frequency_glm.py
+
+      - name: Run Gamma severity GLM
+        run: python src/severity_glm.py
+
+      - name: Run risk-based pricing model
+        run: python src/risk_based_pricing.py
+
+      - name: Upload model results
         uses: actions/upload-artifact@v4
         with:
-          name: risk-visualization
-          path: figures/aggregate_loss_distribution.png
+          name: actuarial-model-results
+          path: |
+            figures/aggregate_loss_distribution.png
+            frequency_glm_results.csv
+            severity_glm_results.csv
+            risk_based_pricing_results.csv
           if-no-files-found: error
