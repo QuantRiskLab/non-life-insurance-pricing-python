@@ -59,6 +59,10 @@ jobs:
         
       - name: Validate Poisson frequency model
         run: python src/frequency_model_validation.py
+        
+      - name: Validate Gamma severity model
+        run: python src/severity_model_validation.py
+
 
         
       - name: Generate premium visualization
