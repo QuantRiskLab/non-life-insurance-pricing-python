@@ -175,8 +175,7 @@ For policyholder $i$:
 
 $$
 \log(E[N_i \mid \mathbf{x}_i])
-=
-\log(e_i) + \beta_0 + \sum_{k=1}^{p}\beta_k x_{ik}
+= \log(e_i) + \beta_0 + \sum_{k=1}^{p}\beta_k x_{ik}
 $$
 
 where:
@@ -193,8 +192,7 @@ A Gamma Generalized Linear Model with a logarithmic link estimates expected clai
 
 $$
 \log(E[X_i \mid \mathbf{x}_i])
-=
-\gamma_0 + \sum_{k=1}^{p}\gamma_k x_{ik}
+= \gamma_0 + \sum_{k=1}^{p}\gamma_k x_{ik}
 $$
 
 where $\gamma_k$ denotes the severity regression coefficients.
@@ -205,8 +203,7 @@ Predicted annual claim frequency and expected claim severity are combined to est
 
 $$
 P_{\mathrm{pure},i}
-=
-\widehat{\lambda}_i \widehat{\mu}_i
+= \widehat{\lambda}_i \widehat{\mu}_i
 $$
 
 where:
@@ -218,8 +215,7 @@ Individual gross premiums are calculated as:
 
 $$
 P_{\mathrm{gross},i}
-=
-\frac{P_{\mathrm{pure},i}(1+0.10)}{1-0.20}
+= \frac{P_{\mathrm{pure},i}(1+0.10)}{1-0.20}
 $$
 
 This approach demonstrates differentiated insurance pricing based on modeled risk characteristics.
