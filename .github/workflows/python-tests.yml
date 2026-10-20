@@ -27,6 +27,11 @@ jobs:
       - name: Check Python syntax
         run: |
           python -m compileall -q src
+          
+      - name: Run actuarial unit tests
+        run: |
+          python -m unittest discover -s tests -p "test_*.py" -v
+
 
       - name: Run claim frequency simulation
         run: python src/claim_frequency.py
