@@ -3,46 +3,44 @@
 
 An actuarial Python project for insurance claim simulation, premium calculation, Generalized Linear Models (GLMs), and quantitative portfolio risk analysis.
 
-The project combines traditional actuarial pricing methods with statistical modeling and Monte Carlo simulation to demonstrate practical applications of non-life insurance mathematics.
+This project combines traditional actuarial pricing methods with statistical modeling and Monte Carlo simulation.
 
 ## Project Overview
 
-This project implements an end-to-end actuarial modeling workflow using synthetic insurance data.
+The project implements an actuarial modeling workflow using synthetic insurance data.
 
-The main components include:
+Key components:
 
-- Claim frequency simulation using the Poisson distribution
-- Claim severity simulation using the Gamma distribution
+- Poisson claim frequency simulation
+- Gamma claim severity simulation
 - Pure and gross premium calculation
-- Monte Carlo simulation of aggregate annual portfolio losses
+- Monte Carlo simulation of aggregate annual losses
 - Value at Risk (VaR) and Expected Shortfall (ES)
-- Poisson GLM for claim frequency modeling
-- Gamma GLM for claim severity modeling
-- Individual risk-based insurance premium calculation
+- Poisson GLM for claim frequency
+- Gamma GLM for claim severity
+- Individual risk-based insurance pricing
 - Out-of-sample model validation
-- Baseline model comparisons
-- Data visualization and automated testing
-
-The project is designed as a quantitative portfolio demonstration relevant to actuarial science, insurance pricing, and risk management.
+- Risk and premium visualizations
+- Automated testing with GitHub Actions
 
 ## Mathematical Framework
 
 ### 1. Claim Frequency
 
-The annual number of claims for policyholder $i$ is modeled as:
+The annual number of claims for policyholder $i$ follows a Poisson distribution:
 
 $$
-N_i \sim \operatorname{Poisson}(\lambda)
+N_i \sim \mathrm{Poisson}(\lambda)
 $$
 
 where:
 
-- $N_i$: annual claim count for policyholder $i$
-- $\lambda = 0.15$: expected annual claim frequency
+- $N_i$ is the annual claim count for policyholder $i$.
+- $\lambda = 0.15$ is the expected annual claim frequency.
 
 The illustrative portfolio contains 1,000 policies.
 
-The expected total annual claim count is:
+The expected annual number of claims is:
 
 $$
 E[N] = 1000 \times 0.15 = 150
@@ -53,7 +51,7 @@ $$
 Individual claim amounts follow a Gamma distribution:
 
 $$
-X_j \sim \operatorname{Gamma}(\alpha,\theta)
+X_j \sim \mathrm{Gamma}(\alpha,\theta)
 $$
 
 with:
@@ -67,23 +65,23 @@ $$
 E[X] = \alpha\theta = 3000
 $$
 
-The variance of claim severity is:
+Claim severity variance:
 
 $$
-\operatorname{Var}(X) = \alpha\theta^2
+\mathrm{Var}(X) = \alpha\theta^2
 $$
 
 ### 3. Aggregate Loss Model
 
-Annual aggregate portfolio losses are modeled using a compound Poisson process:
+Annual aggregate portfolio losses are modeled as:
 
 $$
 S = \sum_{j=1}^{N} X_j
 $$
 
-where $N$ denotes the total number of claims in the portfolio.
+where $N$ denotes the total annual claim count.
 
-Assuming independent claim frequencies and severities:
+Assuming independent claim counts and claim severities:
 
 $$
 E[S] = E[N]E[X]
@@ -99,14 +97,14 @@ Therefore, the expected annual portfolio loss is **EUR 450,000**.
 
 ### 4. Insurance Premium Calculation
 
-The pure premium represents the expected annual claim cost per policy:
+The pure premium per policy is:
 
 $$
-P_{\text{pure}} = \lambda E[X]
+P_{\mathrm{pure}} = \lambda E[X]
 $$
 
 $$
-P_{\text{pure}} = 0.15 \times 3000 = 450
+P_{\mathrm{pure}} = 0.15 \times 3000 = 450
 $$
 
 The illustrative gross premium includes:
@@ -117,16 +115,14 @@ The illustrative gross premium includes:
 The gross premium is calculated as:
 
 $$
-P_{\text{gross}}
-=
-\frac{P_{\text{pure}}(1+0.10)}{1-0.20}
+P_{\mathrm{gross}} = \frac{P_{\mathrm{pure}}(1+0.10)}{1-0.20}
 $$
 
 $$
-P_{\text{gross}} = 618.75
+P_{\mathrm{gross}} = 618.75
 $$
 
-The resulting illustrative gross premium is **EUR 618.75 per policy**.
+The resulting gross premium is **EUR 618.75 per policy**.
 
 ### 5. Monte Carlo Risk Analysis
 
@@ -135,33 +131,30 @@ The project simulates 10,000 annual aggregate portfolio loss scenarios.
 The 99% Value at Risk is defined as:
 
 $$
-\operatorname{VaR}_{0.99}(S)
-=
-F_S^{-1}(0.99)
+\mathrm{VaR}_{0.99}(S) = F_S^{-1}(0.99)
 $$
 
-The 99% Expected Shortfall is estimated from simulated losses in the upper tail:
+The 99% Expected Shortfall is estimated as:
 
 $$
-\operatorname{ES}_{0.99}(S)
-=
-E[S \mid S \geq \operatorname{VaR}_{0.99}(S)]
+\mathrm{ES}_{0.99}(S) =
+E[S \mid S \geq \mathrm{VaR}_{0.99}(S)]
 $$
 
-VaR provides a loss quantile at a specified confidence level, while Expected Shortfall measures the average severity of losses beyond the corresponding threshold.
+VaR represents a loss quantile at a specified confidence level.
+
+Expected Shortfall measures the average loss in the upper tail beyond the VaR threshold.
 
 ## Monte Carlo Risk Visualization
 
 ![Monte Carlo Aggregate Loss Distribution](aggregate_loss_distribution.png)
 
-The visualization illustrates the simulated distribution of annual aggregate portfolio losses, including:
+The visualization illustrates:
 
-- Simulated aggregate loss outcomes
+- Simulated annual aggregate losses
 - Expected portfolio losses
 - 99% Value at Risk
 - 99% Expected Shortfall
-
-This analysis demonstrates how simulation can support quantitative insurance risk assessment.
 
 ## Generalized Linear Models
 
@@ -169,14 +162,14 @@ This analysis demonstrates how simulation can support quantitative insurance ris
 
 A Poisson Generalized Linear Model estimates claim frequency using synthetic policyholder characteristics.
 
-The explanatory variables include:
+Explanatory variables include:
 
 - Driver age
 - Vehicle age
 - Annual mileage
 - Policy exposure
 
-A log link function is used to model expected claim counts.
+The model uses a logarithmic link function.
 
 For policyholder $i$:
 
@@ -188,17 +181,15 @@ $$
 
 where:
 
-- $e_i$: policy exposure
-- $x_{ik}$: explanatory variables
-- $\beta_k$: regression coefficients
+- $e_i$ is policy exposure.
+- $x_{ik}$ represents explanatory variables.
+- $\beta_k$ denotes regression coefficients.
 
 The logarithm of exposure is incorporated as an offset.
 
 ### 2. Claim Severity GLM
 
-A Gamma Generalized Linear Model with a log link estimates expected claim severity.
-
-For a claim with explanatory variables $\mathbf{x}_i$:
+A Gamma Generalized Linear Model with a logarithmic link estimates expected claim severity.
 
 $$
 \log(E[X_i \mid \mathbf{x}_i])
@@ -206,59 +197,58 @@ $$
 \gamma_0 + \sum_{k=1}^{p}\gamma_k x_{ik}
 $$
 
-where $\gamma_k$ denotes the severity model coefficients.
+where $\gamma_k$ denotes the severity regression coefficients.
 
 ### 3. Risk-Based Insurance Pricing
 
 Predicted annual claim frequency and expected claim severity are combined to estimate individual pure premiums.
 
 $$
-P_{\text{pure},i}
+P_{\mathrm{pure},i}
 =
-\widehat{\lambda}_i
-\widehat{\mu}_i
+\widehat{\lambda}_i \widehat{\mu}_i
 $$
 
 where:
 
-- $\widehat{\lambda}_i$: predicted annual claim frequency
-- $\widehat{\mu}_i$: predicted expected claim severity
+- $\widehat{\lambda}_i$ is predicted annual claim frequency.
+- $\widehat{\mu}_i$ is predicted expected claim severity.
 
-Individual gross premiums are calculated using the illustrative loading structure:
+Individual gross premiums are calculated as:
 
 $$
-P_{\text{gross},i}
+P_{\mathrm{gross},i}
 =
-\frac{P_{\text{pure},i}(1+0.10)}{1-0.20}
+\frac{P_{\mathrm{pure},i}(1+0.10)}{1-0.20}
 $$
 
-This approach demonstrates how statistical models can support differentiated insurance pricing.
+This approach demonstrates differentiated insurance pricing based on modeled risk characteristics.
 
 ## Risk-Based Premium Visualization
 
 ![Risk-Based Premium Analysis](figures/risk_based_premium_analysis.png)
 
-The visualization explores how estimated gross premiums vary with:
+The visualization illustrates how estimated gross premiums vary across:
 
 - Driver age
 - Vehicle age
 - Annual mileage
 
-The results are generated from synthetic data and illustrate the relationship between modeled risk characteristics and insurance premiums.
+All results are based on synthetic data.
 
 ## Model Validation
 
 The project includes separate validation scripts for claim frequency and claim severity.
 
-Both validation workflows use an 80/20 training and testing split to assess predictive performance on held-out synthetic observations.
+Both workflows use an 80/20 training and testing split.
 
-The evaluation includes:
+Predictive performance is evaluated using:
 
 - Mean Absolute Error (MAE)
 - Root Mean Squared Error (RMSE)
 - Comparisons between observed and predicted outcomes
 
-The validation scripts support the assessment of predictive accuracy and provide a foundation for further model diagnostics.
+The validation framework provides a foundation for further statistical model diagnostics.
 
 ## Technologies
 
@@ -363,8 +353,6 @@ python src/risk_visualization.py
 python src/premium_visualization.py
 ```
 
-The visualization scripts save generated figures in the `figures/` directory.
-
 ### 8. Run unit tests
 
 ```bash
@@ -375,17 +363,20 @@ python -m unittest discover -s tests -p "test_*.py" -v
 
 GitHub Actions provides an automated workflow for checking the Python project.
 
-The workflow executes model scripts and unit tests and generates analytical outputs.
+The workflow:
 
-Successful workflow execution helps verify that the configured scripts run without errors in the continuous integration environment.
+- Executes actuarial model scripts
+- Runs automated unit tests
+- Generates analytical outputs
+- Uploads generated results as workflow artifacts
 
-Generated outputs are made available as workflow artifacts.
+Successful execution confirms that the configured workflow steps complete without errors.
 
 ## Model Assumptions and Limitations
 
 This project is an educational actuarial modeling exercise based entirely on synthetic data.
 
-The simplified modeling framework assumes:
+The simplified framework assumes:
 
 - Independent claim occurrences and severities
 - Constant baseline claim frequency and severity parameters
@@ -396,7 +387,7 @@ The simplified modeling framework assumes:
 
 The GLM results depend on the synthetic data-generating process and should not be interpreted as empirical findings about real insurance policyholders.
 
-The project is not a production-ready insurance pricing system and does not provide commercially calibrated premiums.
+The project is not a production-ready insurance pricing system.
 
 ## Future Extensions
 
