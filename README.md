@@ -109,6 +109,35 @@ ES_{0.99}(S)
 
 The chart illustrates the simulated annual aggregate loss distribution, expected losses, 99% VaR, and 99% Expected Shortfall.
 
+## Risk-Based Premium Analysis
+
+This project extends traditional actuarial pricing with
+Generalized Linear Models (GLMs) for claim frequency
+and severity.
+
+A Poisson GLM estimates annual claim frequency, while
+a Gamma GLM with a log link estimates expected claim
+severity.
+
+The models use synthetic policyholder characteristics:
+- Driver age
+- Vehicle age
+- Annual mileage
+- Policy exposure
+
+Predicted claim frequency and severity are combined
+to calculate individual risk-based insurance premiums.
+
+![Risk-Based Premium Analysis](figures/risk_based_premium_analysis.png)
+
+The visualization illustrates how estimated gross
+premiums vary across driver age, vehicle age,
+and annual mileage.
+
+All results are based on synthetic data and are
+intended for educational and analytical purposes.
+
+
 ## Technologies
 
 - Python
