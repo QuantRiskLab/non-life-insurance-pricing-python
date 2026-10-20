@@ -150,21 +150,29 @@ intended for educational and analytical purposes.
 
 ## Project Structure
 
-```text
+
 non-life-insurance-pricing-python/
 ├── .github/
 │   └── workflows/
 │       └── python-tests.yml
+├── figures/
+│   └── risk_based_premium_analysis.png
 ├── src/
 │   ├── claim_frequency.py
 │   ├── claim_severity.py
 │   ├── premium_calculation.py
 │   ├── monte_carlo_risk.py
-│   └── risk_visualization.py
+│   ├── risk_visualization.py
+│   ├── frequency_glm.py
+│   ├── severity_glm.py
+│   ├── risk_based_pricing.py
+│   └── premium_visualization.py
+├── tests/
+│   └── test_actuarial_models.py
 ├── aggregate_loss_distribution.png
 ├── requirements.txt
 └── README.md
-```
+
 
 ## Installation
 
@@ -176,25 +184,49 @@ pip install -r requirements.txt
 
 ## Usage
 
-Run the premium calculation:
+
+Run the individual actuarial models:
 
 ```bash
+python src/claim_frequency.py
+python src/claim_severity.py
 python src/premium_calculation.py
-```
-
-Run the Monte Carlo risk simulation:
-
-```bash
 python src/monte_carlo_risk.py
 ```
 
-Generate the risk visualization:
+Fit the Generalized Linear Models:
+
+```bash
+python src/frequency_glm.py
+python src/severity_glm.py
+```
+
+Generate risk-based insurance premiums:
+
+```bash
+python src/risk_based_pricing.py
+```
+
+Generate the visualizations:
 
 ```bash
 python src/risk_visualization.py
+python src/premium_visualization.py
 ```
 
-The generated chart is saved in the `figures/` directory.
+The visualization scripts save their outputs in
+the `figures/` directory.
+
+Run the unit tests:
+
+```bash
+python -m unittest discover -s tests -p "test_*.py" -v
+```
+
+GitHub Actions automatically executes the models
+and tests and uploads the generated results
+as workflow artifacts.
+
 
 ## Model Limitations
 
@@ -204,10 +236,16 @@ The model assumes independent claim occurrences and severities, constant portfol
 
 ## Future Extensions
 
-- Generalized Linear Models (GLMs) for claim frequency and severity
-- Parameter estimation using synthetic datasets
+
+## Future Extensions
+
+- Model validation using holdout datasets
+- GLM diagnostics and residual analysis
 - Sensitivity and scenario analysis
-- Risk-based pricing
-- Automated unit tests
-- Model validation and documentation
+- Parameter uncertainty and bootstrap methods
+- Improved automated tests for model implementations
+- Comparison of alternative pricing models
+- Portfolio profitability and loss ratio analysis
+- Interactive actuarial analytics dashboard
+
 
