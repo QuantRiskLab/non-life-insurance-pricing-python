@@ -56,6 +56,10 @@ jobs:
 
       - name: Run risk-based pricing model
         run: python src/risk_based_pricing.py
+        
+      - name: Generate premium visualization
+        run: python src/premium_visualization.py
+
 
       - name: Upload model results
         uses: actions/upload-artifact@v4
@@ -63,6 +67,9 @@ jobs:
           name: actuarial-model-results
           path: |
             figures/aggregate_loss_distribution.png
+            
+            figures/risk_based_premium_analysis.png
+
             frequency_glm_results.csv
             severity_glm_results.csv
             risk_based_pricing_results.csv
