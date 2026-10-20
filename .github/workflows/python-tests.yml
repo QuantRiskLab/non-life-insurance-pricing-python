@@ -57,6 +57,10 @@ jobs:
       - name: Run risk-based pricing model
         run: python src/risk_based_pricing.py
         
+      - name: Validate Poisson frequency model
+        run: python src/frequency_model_validation.py
+
+        
       - name: Generate premium visualization
         run: python src/premium_visualization.py
 
