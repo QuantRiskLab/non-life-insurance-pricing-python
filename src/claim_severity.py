@@ -27,13 +27,6 @@ print(f"Total claim amount: EUR {total_claim_amount:,.2f}")
 print(f"Average claim amount: EUR {average_claim_amount:,.2f}")
 print(f"Maximum claim amount: EUR {maximum_claim_amount:,.2f}")
 
-# Baseline: constant mean severity from the training dataset
-baseline_mean_severity = train["claim_amount"].mean()
-
-baseline_predictions = np.full(
-    len(test),
-    baseline_mean_severity
-)
 
 # Evaluate baseline predictions
 baseline_mae = mean_absolute_error(
