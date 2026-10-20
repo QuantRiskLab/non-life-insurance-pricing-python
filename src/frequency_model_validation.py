@@ -95,3 +95,43 @@ print(f"Mean Absolute Error: {mae:.4f}")
 print(f"Root Mean Squared Error: {rmse:.4f}")
 print(f"Actual annual claim frequency: {actual_frequency:.4f}")
 print(f"Predicted annual claim frequency: {predicted_frequency:.4f}")
+
+# Baseline: constant claim frequency estimated from training data
+baseline_annual_frequency = (
+    train["claim_count"].sum() / train["exposure"].sum()
+)
+
+baseline_predictions = (
+    baseline_annual_frequency * test["exposure"]
+)
+
+baseline_mae = mean_absolute_error(
+    test["claim_count"],
+    baseline_predictions
+)
+
+baseline_rmse = np.sqrt(
+    mean_squared_error(
+        test["claim_count"],
+        baseline_predictions
+    )
+)
+
+# Compare GLM and baseline performance
+print("\nModel Comparison")
+print("-----------------------------------")
+print(f"{'Metric':<12} {'Poisson GLM':>15} {'Baseline':>15}")
+print(f"{'MAE':<12} {mae:>15.4f} {baseline_mae:>15.4f}")
+print(f"{'RMSE':<12} {rmse:>15.4f} {baseline_rmse:>15.4f}")
+
+mae_improvement = (
+    (baseline_mae - mae) / baseline_mae * 100
+    if baseline_mae > 0 else 0.0
+)
+
+print(f"\nMAE improvement over baseline: {mae_improvement:.2f}%")
+
+if mae < baseline_mae:
+    print("The Poisson GLM outperforms the baseline on MAE.")
+else:
+    print("The baseline matches or outperforms the Poisson GLM on MAE.")
